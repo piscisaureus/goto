@@ -1,28 +1,10 @@
 
 $(function() {
   var notes = {},
-      clientId = Math.round(Math.random() * 1e12),
-      socket = io.connect(window.location.protocol + '//' +
-                          window.location.host + '/');
-
+      clientId = Math.round(Math.random() * 1e12);
+      
   function send(note) {
-    socket.emit('note', note, clientId);
   }
-
-  socket.on('note', function(note, clientId_) {
-    if (clientId_ != clientId) {
-      update(note);
-    }
-  });
-
-  socket.on('init', function(notes) {
-    for (var k in notes) {
-      if (notes.hasOwnProperty(k)) {
-        update(notes[k]);
-      }
-    }
-  });
-
 
   $('.create').click(create);
 
