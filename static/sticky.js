@@ -1,42 +1,6 @@
 
 $(function() {
-  var notes = {},
-      clientId = Math.round(Math.random() * 1e12),
-      socket = io.connect(window.location.protocol + '//' +
-                          window.location.host + '/');
-
-  function send(note) {
-    socket.emit('note', note, clientId);
-  }
-
-  socket.on('note', function(note, clientId_) {
-    if (clientId_ != clientId) {
-      update(note);
-    }
-  });
-
-  socket.on('init', function(notes) {
-    for (var k in notes) {
-      if (notes.hasOwnProperty(k)) {
-        update(notes[k]);
-      }
-    }
-  });
-
-
-  $('.create').click(create);
-
-  function create() {
-    var note = {
-      id: (new Date()).getTime() + "-" + clientId,
-      message: "",
-      x: Math.floor(($('body').innerWidth() - 200) * Math.random()),
-      y: Math.floor(($('body').innerHeight() - 200) * Math.random())
-    };
-
-    update(note, true);
-  }
-
+  var notes = {};
 
   function update(note_, create) {
     var div;
@@ -141,4 +105,40 @@ $(function() {
       delete notes[note.id];
     }
   }
+
+  var clientId = Math.round(Math.random() * 1e12);
+
+  function create() {
+    var note = {
+      id: (new Date()).getTime() + "-" + clientId,
+      message: "",
+      x: Math.floor(($('body').innerWidth() - 200) * Math.random()),
+      y: Math.floor(($('body').innerHeight() - 200) * Math.random())
+    };
+
+    update(note, true);
+  }
+
+  $('.create').click(create);
+
+  var socket = io.connect(window.location.protocol + '//' +
+                          window.location.host + '/');
+
+  function send(note) {
+    socket.emit('note', note, clientId);
+  }
+
+  socket.on('note', function(note, clientId_) {
+    if (clientId_ != clientId) {
+      update(note);
+    }
+  });
+
+  socket.on('init', function(notes) {
+    for (var k in notes) {
+      if (notes.hasOwnProperty(k)) {
+        update(notes[k]);
+      }
+    }
+  });
 });

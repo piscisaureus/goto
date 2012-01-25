@@ -31,15 +31,11 @@ body, html {
   margin: 0;
   background: #eee;
   width: 160px;
-  height: 140px;
-}
-
-.note p, .note textarea {
+  height: 160px;
   font-family: serif;
-  font-size: 16px;
 }
 
-.create {
+a.create {
   background: #F7DC46;
   border: 10px solid #fff;
   color: black;
@@ -47,7 +43,7 @@ body, html {
   position: absolute;
   font-size: 25pt;
   display: block;
-  padding: 0 10px;
+  padding: 0px 10px;
   text-decoration: none;
   top: 10px;
   left: 10px;
